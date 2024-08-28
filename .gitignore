@@ -1,0 +1,6 @@
+__pychache__/
+*.xml
+*.pyc
+.idea/
+api/.env
+api/manual/
