@@ -5,16 +5,21 @@ from api.services import tools
 from api.services.database import Base
 from api.schemas.user import UserSchema
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id: Mapped[String] = mapped_column(String, primary_key=True, default=tools.get_uuid)
     email: Mapped[String] = mapped_column(String, unique=True)
 
     nickname: Mapped[String] = mapped_column(String, nullable=False)
     bio: Mapped[String] = mapped_column(String, nullable=True)
-    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, default=tools.get_dt)
-    last_online: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False, default=tools.get_dt)
+    created_at: Mapped[DateTime] = mapped_column(
+        DateTime(timezone=True), nullable=False, default=tools.get_dt
+    )
+    last_online: Mapped[DateTime] = mapped_column(
+        DateTime(timezone=True), nullable=False, default=tools.get_dt
+    )
     password: Mapped[String] = mapped_column(String, nullable=False)
     profile_picture_url: Mapped[String] = mapped_column(String, nullable=True)
 
@@ -24,5 +29,5 @@ class User(Base):
             email=self.email,
             nickname=self.nickname,
             profile_picture_url=self.profile_picture_url,
-            bio=self.bio
+            bio=self.bio,
         )

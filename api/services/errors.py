@@ -1,5 +1,6 @@
 from fastapi import status, HTTPException
 
+
 class CustomErrors:
     CouldNotValidateCredentials = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -30,4 +31,7 @@ class CustomErrors:
     GoneComment = HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail="There is no that comment anymore",
+    )
+    EntityNotFound = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND, detail="The requested object not found"
     )

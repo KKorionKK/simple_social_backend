@@ -8,6 +8,7 @@ class CreatePostSchema(BaseModel):
     color: str
     pictures_urls: list[str]
 
+
 class PostSchema(BaseModel):
     id: str
     description: str
@@ -15,6 +16,7 @@ class PostSchema(BaseModel):
     pictures_urls: list[str]
     created_at: datetime
     user: UserSchema
+
 
 class PostSchemaExtended(BaseModel):
     id: str
@@ -25,6 +27,7 @@ class PostSchemaExtended(BaseModel):
     user: UserSchema
     likes: int
     comments: int
+
 
 class FeedSchema(BaseModel):
     items: list[PostSchema]

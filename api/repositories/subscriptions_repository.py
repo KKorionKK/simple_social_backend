@@ -4,23 +4,28 @@ from sqlalchemy import select, and_, delete
 from api.models import Subscription, User
 from api.services.errors import CustomErrors
 
+
 class SubscriptionsRepository(Repository):
     async def check_sub(self, head: User, tail_id: str) -> bool:
         async with self.client() as session:
             session: AsyncSession
-            result: Subscription | None = (await session.execute(
-                select(Subscription)
-                .where(
-                    and_(
-                        Subscription.head_id == head.id,
-                        Subscription.tail_id == tail_id
+            result: Subscription | None = (
+                (
+                    await session.execute(
+                        select(Subscription).where(
+                            and_(
+                                Subscription.head_id == head.id,
+                                Subscription.tail_id == tail_id,
+                            )
+                        )
                     )
                 )
-            )).scalars().first()
+                .scalars()
+                .first()
+            )
             if result:
                 return True
             return False
-
 
     async def add_sub(self, head: User, tail_id: str) -> Subscription:
         model = Subscription(head_id=head.id, tail_id=tail_id)
@@ -35,11 +40,9 @@ class SubscriptionsRepository(Repository):
         async with self.client() as session:
             session: AsyncSession
             await session.execute(
-                delete(Subscription)
-                .where(
+                delete(Subscription).where(
                     and_(
-                        Subscription.head_id == head.id,
-                        Subscription.tail_id == tail_id
+                        Subscription.head_id == head.id, Subscription.tail_id == tail_id
                     )
                 )
             )
@@ -53,11 +56,8 @@ class SubscriptionsRepository(Repository):
         if not check_user:
             raise CustomErrors.UserNotFound
         return await self.add_sub(head, tail_id)
-    
+
     async def get_user_subscribers_count(self, user_id: str) -> Subscription:
         async with self.client() as session:
             session: AsyncSession
-            await session.execute(
-                select(User)
-                .where()
-            )
+            await session.execute(select(User).where())

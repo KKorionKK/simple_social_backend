@@ -5,9 +5,9 @@ from .like import Like
 from .comment import Comment
 
 __all__ = [
-    'Subscription',
-    'User',
-    'Post',
-    'Like',
-    'Comment',
+    "Subscription",
+    "User",
+    "Post",
+    "Like",
+    "Comment",
 ]

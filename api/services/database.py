@@ -1,4 +1,10 @@
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine, async_scoped_session, async_sessionmaker
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    create_async_engine,
+    AsyncEngine,
+    async_scoped_session,
+    async_sessionmaker,
+)
 from contextlib import asynccontextmanager
 from asyncio import current_task
 
@@ -11,9 +17,15 @@ Base = declarative_base()
 
 class PostgreSQLController:
     def __init__(self, echo: bool = False) -> None:
-        self.engine: AsyncEngine = create_async_engine(config.get_connection_string(), echo=echo)
-        self._session_maker: async_sessionmaker[AsyncSession] = async_sessionmaker(self.engine, expire_on_commit=False)
-        self._factory = async_scoped_session(self._session_maker, scopefunc=current_task)
+        self.engine: AsyncEngine = create_async_engine(
+            config.get_connection_string(), echo=echo
+        )
+        self._session_maker: async_sessionmaker[AsyncSession] = async_sessionmaker(
+            self.engine, expire_on_commit=False
+        )
+        self._factory = async_scoped_session(
+            self._session_maker, scopefunc=current_task
+        )
 
     async def init_db(self) -> None:
         async with self.engine.begin() as conn:

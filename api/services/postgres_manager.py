@@ -1,5 +1,11 @@
 from .database import PostgreSQLController
-from api.repositories import UsersRepository, SubscriptionsRepository, PostsRepository, CommentsRepository
+from api.repositories import (
+    UsersRepository,
+    SubscriptionsRepository,
+    PostsRepository,
+    CommentsRepository,
+)
+
 
 class PGManager:
     __instance = None
@@ -10,7 +16,7 @@ class PGManager:
         return cls.__instance
 
     def __init__(self, echo: bool = False) -> None:
-        if not hasattr(self, 'client'):
+        if not hasattr(self, "client"):
             self.client = PostgreSQLController(echo)
             self.users = UsersRepository(self.client, self)
             self.subscriptions = SubscriptionsRepository(self.client, self)
@@ -18,5 +24,5 @@ class PGManager:
             self.comments = CommentsRepository(self.client, self)
 
     @staticmethod
-    def get_manager() -> 'PGManager':
+    def get_manager() -> "PGManager":
         return PGManager()

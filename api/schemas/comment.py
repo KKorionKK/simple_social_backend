@@ -1,11 +1,13 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class CreateCommentSchema(BaseModel):
     message: str
     post_id: str
     thread_id: str | None
     reply_to: str | None
+
 
 class CommentSchema(BaseModel):
     message: str
@@ -15,12 +17,15 @@ class CommentSchema(BaseModel):
     thread_id: str | None
     reply_to: str | None
 
+
 class PostCommentsSchema(BaseModel):
     comments: list[CommentSchema]
+
 
 class CommentUpdateSchema(BaseModel):
     comment_id: str
     message: str
+
 
 class CommentLikeSchema(BaseModel):
     post_id: str
